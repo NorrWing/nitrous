@@ -23,7 +23,7 @@ class Nitrous
       next()
   
   router: () ->
-    return express.router(require(path.join(@app.settings.root, "./routes"))(@app))
+    return express.router(require(path.join(@app.settings.root, "./routes")))(@app)
   
   controllers: () -> 
     Request = new RequestHandler(@app.settings.root)
