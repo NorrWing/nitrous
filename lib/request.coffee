@@ -1,11 +1,6 @@
 _ = require("underscore")
 async = require("async")
-# everyauth = require("everyauth")
-# mongoose = require("mongoose")
-# ObjectId = mongoose.Types.ObjectId
-
-# console.log(mongoose.Types.ObjectId.fromString.toString())
-# Traversal = require("../lib/traversal")
+path = require("path")
 Traversal = require("./traversal")
 
 # TODO: move this elsewhere
@@ -20,9 +15,9 @@ HTTP404Error = (req, res) ->
   res.send("404: Page not found") # TODO: create this
 
 class RequestHandler
-  constructor: (dir, @Controllers = {}, @Models = {}) ->
+  constructor: (dir, controllers_path = "/controllers", models_path = "/models") ->
     # Autoloaders
-    c = new Traversal(dir + "/controllers", "js", {
+    c = new Traversal(path.join(dir, controllers_path), "js", {
       functions: {
         pre: () =>
         post: (startPath, currentFile, selected) =>
@@ -36,7 +31,7 @@ class RequestHandler
           
       }
     }).traverse()
-    models = new Traversal(dir + "/models", "js", {
+    models = new Traversal(path.join(dir, models_path), "js", {
       functions: {
         pre: () =>
         post: (startPath, currentFile, selected) =>

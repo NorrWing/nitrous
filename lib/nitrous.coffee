@@ -28,7 +28,6 @@ class Nitrous
   controllers: () -> 
     Request = new RequestHandler(@app.settings.root)
     @app.Controllers = Request.Controllers
-    @app.Models = Request.Models
 
     return (req, res, next) ->
       req.Models = @app.Models = Request.Models
