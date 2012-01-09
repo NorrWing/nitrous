@@ -5,7 +5,7 @@ RequestHandler = require("./request")
 
 class Nitrous
   constructor: (@app, config_path = "./config/index") ->
-    @app.config = require(path.join(app.settings.root, config_path)) # TODO: option to change path
+    @app.config = require(path.join(@app.settings.root, config_path)) # TODO: option to change path
     # @app.redisStore = require("connect-redis")(express)
     process.port = @app.config.port
   
@@ -23,7 +23,7 @@ class Nitrous
       next()
   
   router: () ->
-    return express.router(require(path.join(app.settings.root, "./routes"))(@app))
+    return express.router(require(path.join(@app.settings.root, "./routes"))(@app))
   
   controllers: () -> 
     Request = new RequestHandler(@app.settings.root)
