@@ -23,14 +23,17 @@ class Nitrous
       next()
   
   router: () ->
-    return express.router(require(path.join(@app.settings.root, "./routes"))(@app))
+    r = require(path.join(@app.settings.root, "./routes"))
+    return express.router(r(@app))
   
   controllers: () -> 
     Request = new RequestHandler(@app.settings.root)
     @app.Controllers = Request.Controllers
+    
+    self = this
 
     return (req, res, next) ->
-      req.Models = @app.Models = Request.Models
+      req.Models = self.app.Models = Request.Models
 
       res.psend = (data, pure = false) ->
         output = JSON.stringify(data, null, 2)
