@@ -15,6 +15,8 @@ HTTP404Error = (req, res) ->
   res.send("404: Page not found") # TODO: create this
 
 class RequestHandler
+  Models: {}
+  Controllers: {}
   constructor: (dir, controllers_path = "/controllers", models_path = "/models") ->
     # Autoloaders
     c = new Traversal(path.join(dir, controllers_path), "js", {
