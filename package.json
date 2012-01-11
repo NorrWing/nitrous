@@ -1,7 +1,7 @@
 {
   "name": "nitrous",
   "description": "Rapid web development framework created for and used by Spoondate.com",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": "Van Nguyen <thegoleffect@gmail.com>",
   "contributors": [
     
@@ -20,5 +20,5 @@
   "keywords": ["express", "framework", "spoondate"],
   "repository": "git://github.com/thegoleffect/nitrous",
   "main": "index",
-  "engines": { "node": ">= 0.5.0 < 0.7.0" }
+  "engines": { "node": ">= 0.4.0 < 0.7.0" }
 }
