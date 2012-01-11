@@ -54,6 +54,21 @@ describe("express", () ->
       done()
     )
   )
+
+  it("should run w/ nitrous.mvc()", (done) ->
+    app = express.createServer()
+    nitrous = new N2O(app, "/tmp/")
+
+    app.configure(() ->
+      app.use(nitrous.init())
+      app.use(nitrous.mvc())
+    )
+
+    app.listen(3000, () ->
+      app.close()
+      done()
+    )
+  )
 )
 
 

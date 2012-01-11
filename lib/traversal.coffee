@@ -68,15 +68,13 @@ class Traversal
             continue
     
   traverse: () ->
-    # options = @options if !options
-    selected = []
-    @options.functions.pre()
-    # console.log("[#{@count}]: about to walk on #{@startPath}")
-    # console.log("[#{@count}]: " + @options.functions.post.toString())
-    @recursiveWalk(@startPath, selected)
-    # console.log("[#{@count}]: done w/ startpath = #{@startPath}")
-    # console.log("selected = #{selected}")
-    return _.uniq(selected)
+    if !path.existsSync(@startPath)
+      return []
+    else
+      selected = []
+      @options.functions.pre()
+      @recursiveWalk(@startPath, selected)
+      return _.uniq(selected)
     
   aggregate: () ->
     return throw "No aggregate file specified" if !@options.aggregate_file?
