@@ -1,4 +1,4 @@
-# express = require("express")
+express = require("express")
 path = require("path")
 
 RequestHandler = require("./request")
@@ -7,8 +7,8 @@ class Nitrous
   constructor: (@app, root, config_path = "./config/index") ->
     @app.settings.root = root
     @app.config = require(path.join(@app.settings.root, config_path)) # TODO: option to change path
-    # @app.redisStore = require("connect-redis")(express)
-    process.port = @app.config.port
+    @app.redisStore = require("connect-redis")(express)
+    # @app.config.port = process.env.PORT || @app.config.port # override with
   
   init: (req, res, next) ->
     package = require("../package.json")
