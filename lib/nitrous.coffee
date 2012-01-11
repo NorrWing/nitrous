@@ -1,16 +1,21 @@
-express = require("express")
+# express = require("express")
 path = require("path")
 
 RequestHandler = require("./request")
 
 class Nitrous
-  constructor: (@app, config_path = "./config/index") ->
+  constructor: (@app, root, config_path = "./config/index") ->
+    @app.settings.root = root
     @app.config = require(path.join(@app.settings.root, config_path)) # TODO: option to change path
     # @app.redisStore = require("connect-redis")(express)
     process.port = @app.config.port
   
   init: (req, res, next) ->
     package = require("../package.json")
+
+    onExit = path.join(@app.settings.root, "./config/on_exit")
+    if path.existsSync(onExit)
+      require(onExit)
 
     return (req, res, next) ->
       req.socket.remoteAddress = req.headers["x-forwarded-for"] || req.socket.remoteAddress
@@ -22,11 +27,15 @@ class Nitrous
         origwriteHead.call(res, status, headers)
       next()
   
-  router: () ->
-    r = require(path.join(@app.settings.root, "./routes"))
-    return express.router(r(@app))
+  # router: () ->
+  #   r = require(path.join(@app.settings.root, "./routes"))
+  #   return express.router(r(@app))
   
-  controllers: () -> 
+  routes: () ->
+    r = require(path.join(@app.settings.root, "./routes"))(@app)
+    return r
+  
+  mvc: () -> 
     Request = new RequestHandler(@app.settings.root)
     @app.Controllers = Request.Controllers
     
