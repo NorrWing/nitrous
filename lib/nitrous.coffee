@@ -1,4 +1,5 @@
 express = require("express")
+fs = require("fs")
 path = require("path")
 
 RequestHandler = require("./request")
@@ -11,8 +12,14 @@ class Nitrous
     # @app.config.port = process.env.PORT || @app.config.port # override with
   
   init: (req, res, next) ->
-    package = require("../package.json")
-
+    try
+      package = require("../package.json")  
+    catch error
+      try
+        package = JSON.parse(fs.readFileSync("../package.json").toString())
+      catch error
+        throw error
+    
     onExit = path.join(@app.settings.root, "./config/on_exit")
     if path.existsSync(onExit)
       require(onExit)
