@@ -1,13 +1,14 @@
 express = require("express")
 fs = require("fs")
 path = require("path")
+semver = require("semver")
 
 RequestHandler = require("./request")
 
-load = (pathstr) ->
-  try
-    package = require(pathstr)  
-  catch error
+loadJSON = (pathstr) ->
+  if semver.gt(process.version, "0.5.2")
+    package = require(pathstr)
+  else
     try
       if pathstr[0] == "/"
         fullpath = pathstr
@@ -26,7 +27,7 @@ class Nitrous
     # @app.config.port = process.env.PORT || @app.config.port # override with
   
   init: (req, res, next) ->
-    package = load("../package")
+    package = loadJSON("../package.json")
     
     onExit = path.join(@app.settings.root, "./config/on_exit")
     if path.existsSync(onExit)

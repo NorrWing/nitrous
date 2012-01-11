@@ -1,7 +1,7 @@
 {
   "name": "nitrous",
   "description": "Rapid web development framework created for and used by Spoondate.com",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Van Nguyen <thegoleffect@gmail.com>",
   "contributors": [
     
@@ -12,6 +12,7 @@
     "connect-redis": "1.2.0",
     "backbone": "0.5.3",
     "express": "2.5.5",
+    "semver": "1.0.13",
     "underscore": "1.2.3"
   },
   "devDependencies": {

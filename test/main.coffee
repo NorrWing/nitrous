@@ -5,6 +5,12 @@ express = require("express")
 fs = require("fs")
 path = require("path")
 
+# describe("nitrous", () ->
+#   it("should be require-able", (done) ->
+#     n2o = require("../")
+#   )
+# )
+
 describe("express", () ->
   beforeEach((done) ->
     files = ["/tmp/config/index"]
@@ -34,4 +40,23 @@ describe("express", () ->
       done()
     )
   )
+
+  it("should run w/ nitrous.init()", (done) ->
+    app = express.createServer()
+    nitrous = new N2O(app, "/tmp/")
+
+    app.configure(() ->
+      app.use(nitrous.init())
+    )
+
+    app.listen(3000, () ->
+      app.close()
+      done()
+    )
+  )
 )
+
+
+
+
+
