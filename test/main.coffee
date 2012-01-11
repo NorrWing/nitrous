@@ -19,11 +19,6 @@ describe("express", () ->
 
   it("should run w/o nitrous", (done) ->
     app = express.createServer()
-
-    app.configure(() ->
-      app.set("root", "/tmp/")
-    )
-
     app.listen(3000, () ->
       app.close()
       done()
@@ -32,11 +27,7 @@ describe("express", () ->
 
   it("should run w/ nitrous", (done) ->
     app = express.createServer()
-
-    app.configure(() ->
-      app.set("root", "/tmp/")
-    )
-    nitrous = new N2O(app)
+    nitrous = new N2O(app, "/tmp/")
 
     app.listen(3000, () ->
       app.close()

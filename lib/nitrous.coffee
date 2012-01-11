@@ -4,6 +4,20 @@ path = require("path")
 
 RequestHandler = require("./request")
 
+load = (pathstr) ->
+  try
+    package = require(pathstr)  
+  catch error
+    try
+      if pathstr[0] == "/"
+        fullpath = pathstr
+      else
+        fullpath = path.join(__dirname, pathstr)
+      package = JSON.parse(fs.readFileSync(fullpath).toString())
+    catch error
+      throw error
+  return package
+
 class Nitrous
   constructor: (@app, root, config_path = "./config/index") ->
     @app.settings.root = root
@@ -12,13 +26,7 @@ class Nitrous
     # @app.config.port = process.env.PORT || @app.config.port # override with
   
   init: (req, res, next) ->
-    try
-      package = require("../package.json")  
-    catch error
-      try
-        package = JSON.parse(fs.readFileSync("../package.json").toString())
-      catch error
-        throw error
+    package = load("../package")
     
     onExit = path.join(@app.settings.root, "./config/on_exit")
     if path.existsSync(onExit)
