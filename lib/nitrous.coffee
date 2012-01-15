@@ -54,6 +54,7 @@ class Nitrous
   mvc: () -> 
     Request = new RequestHandler(@app.settings.root)
     @app.Controllers = Request.Controllers
+    @app.Models = Request.Models
     
     self = this
 
